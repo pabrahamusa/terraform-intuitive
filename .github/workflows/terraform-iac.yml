@@ -1,0 +1,60 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy Infrastructure
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  tf_fmt:
+    name: Deploy Site
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repo
+      uses: actions/checkout@v1
+
+    - name: Setup AWS Credentials
+      run: |
+        # Production is needed because all of the TF state is stored in prod S3
+        mkdir ~/.aws
+        echo "[prakash-default]" > ~/.aws/credentials
+        echo "aws_access_key_id = ${{ secrets.AWS_ACCESS_KEY_ID }}" >> ~/.aws/credentials
+        echo "aws_secret_access_key = ${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> ~/.aws/credentials
+        AWS_PROFILE=prakash-default && echo AWS_PROFILE=$AWS_PROFILE >> $GITHUB_ENV
+
+    - name: Install terraform Repo     
+      uses: hashicorp/setup-terraform@v2
+      with:
+       terraform_version: 1.4.0      
+
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -check
+      continue-on-error: true
+      
+    - name: Terraform Init
+      id: init
+      run: terraform init
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate -no-color
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -var-file=tfvars/devops-vars.tfvars
+      continue-on-error: true
+      
+    - name: Terraform Apply
+      id: apply
+      run: terraform apply -auto-approve -var-file=tfvars/devops-vars.tfvars
+      continue-on-error: true    
