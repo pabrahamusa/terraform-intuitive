@@ -38,22 +38,22 @@ Docker file is inside this repo Dockerfile
 
 **Docker build screenshot**
 
-![dockerbuild](/Users/prakash.abraham/disc/working-folder/terraform-intuitive/dockerbuild.jpg)
+![dockerbuild](https://github.com/pabrahamusa/terraform-intuitive/blob/main/dockerbuild.jpg)
 
 
 
 **Docker image list**
 
-![dockerlist](/Users/prakash.abraham/disc/working-folder/terraform-intuitive/dockerlist.jpg)
+![dockerlist](https://github.com/pabrahamusa/terraform-intuitive/blob/main/dockerlist.jpg)
 
 
 
 **Docker run**
 
-![docker-run](/Users/prakash.abraham/disc/working-folder/terraform-intuitive/docker-run.jpg)
+![docker-run](https://github.com/pabrahamusa/terraform-intuitive/blob/main/docker-run.jpg)
 
 
 
 **Docker container list**
 
-![docker-container-ls](/Users/prakash.abraham/disc/working-folder/terraform-intuitive/docker-container-ls.jpg)
+![docker-container-ls](https://github.com/pabrahamusa/terraform-intuitive/blob/main/docker-container-ls.jpg)
